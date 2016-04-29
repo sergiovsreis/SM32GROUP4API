@@ -6,6 +6,7 @@ var Schema = mongoose.Schema;
 
 var GroupSchema = new Schema({
     name: String,
+    members : [{ type: Schema.Types.ObjectId, ref: 'Member' }]
 });
 
 var GroupModel = mongoose.model('Group', GroupSchema);

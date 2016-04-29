@@ -7,7 +7,6 @@ var Schema = mongoose.Schema;
 var MemberSchema = new Schema({
     username: String,
     password: String,
-    createdAt: {type: Date, default: Date.now},
     role: {
         level: Number,
         description: String
