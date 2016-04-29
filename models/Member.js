@@ -4,7 +4,7 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-var UserSchema = new Schema({
+var MemberSchema = new Schema({
     username: String,
     password: String,
     createdAt: {type: Date, default: Date.now},
@@ -14,11 +14,11 @@ var UserSchema = new Schema({
     }
 });
 
-var UserModel = mongoose.model('User', UserSchema);
+var MemberModel = mongoose.model('Member', MemberSchema);
 
-UserSchema.pre('save', function (next) {
+MemberSchema.pre('save', function (next) {
     var self = this;
-    UserModel.find({username : self.username}, function (err, docs) {
+    MemberModel.find({username : self.username}, function (err, docs) {
         if (!docs.length){
             next();
         } else {
@@ -28,4 +28,4 @@ UserSchema.pre('save', function (next) {
     });
 });
 
-module.exports = UserModel;
+module.exports = MemberModel;

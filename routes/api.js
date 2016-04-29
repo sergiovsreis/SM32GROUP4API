@@ -1,6 +1,6 @@
 var express = require('express');
 var sha1 = require('sha1');
-var User = require('../models/User');
+var Member = require('../models/Member');
 var router = express.Router();
 
 /* GET home page. */
@@ -8,7 +8,7 @@ router.get('/', function(req, res, next) {
     res.json({test: 'hoi'});
 });
 
-router.post('/user', function(req, res) {
+router.post('/member', function(req, res) {
     var username = req.body.username;
     var password = req.body.password;
 
@@ -31,7 +31,7 @@ router.post('/user', function(req, res) {
     }
 
     password = sha1(password);
-    var user = new User({
+    var member = new Member({
         username: username,
         password: password,
         role: {
@@ -41,17 +41,17 @@ router.post('/user', function(req, res) {
     });
 
 
-    user.save(function (err) {
+    member.save(function (err) {
         if (err) {
             res.status(500);
             res.json({
-                message: 'Something went wrong while creating your user',
+                message: 'Something went wrong while creating your member',
                 error: err,
                 success: false
             });
         } else {
             res.json({
-                user: user,
+                member: member,
                 success: true
             });
         }
