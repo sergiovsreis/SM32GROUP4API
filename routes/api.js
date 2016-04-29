@@ -33,13 +33,13 @@ router.post('/user', function(req, res) {
     password = sha1(password);
     var user = new User({
         username: username,
-        password: password
+        password: password,
+        role: {
+            level: 0,
+            description: 'Member'
+        }
     });
 
-    user.role = {
-        level: 0,
-        description: 'Member'
-    };
 
     user.save(function (err) {
         if (err) {
