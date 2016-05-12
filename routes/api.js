@@ -17,7 +17,8 @@ router.post('/location', locationApi.create);
 router.post('/member/login', memberApi.login);
 router.get('/member', memberApi.requireUser, function(req,res, next) {
     res.json({
-        works: true
+        works: true,
+        loggedInAs: req.user.username
     });
 });
 module.exports = router;

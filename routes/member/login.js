@@ -67,13 +67,14 @@ module.exports.requireUser = function(req, res, next) {
         return next(err);
     }
 
-    Token.findOne({token: token}, function(err, doc) {
+    Token.findOne({token: token}).populate('member').exec(function(err, doc) {
         if(err || doc == null)
         {
             var err = new Error('Unauthorized: Access is denied due to invalid credentials.');
             err.status = 401;
             return next(err);
         }
+        req.user = doc.member;
         next();
     });
 };
