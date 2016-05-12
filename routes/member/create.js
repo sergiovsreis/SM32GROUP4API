@@ -4,26 +4,16 @@
 var Member = require('../../models/Member');
 var sha1 = require('sha1');
 
-module.exports.create = function(req, res) {
+module.exports.create = function(req, res, next) {
     var username = req.body.username;
     var password = req.body.password;
 
     if (typeof(username) === 'undefined' || username === '') {
-        res.status(500);
-        res.json({
-            message: 'Username is empty!',
-            success: false
-        });
-        return;
+        return next(new Error('Username is empty'));
     }
 
     if (typeof(password) === 'undefined' || password === '') {
-        res.status(500);
-        res.json({
-            message: 'Password is empty!',
-            success: false
-        });
-        return;
+        return next(new Error('Password is empty'));
     }
 
     password = sha1(password);
@@ -39,12 +29,7 @@ module.exports.create = function(req, res) {
 
     member.save(function (err) {
         if (err) {
-            res.status(500);
-            res.json({
-                message: 'Something went wrong while creating your member',
-                error: err,
-                success: false
-            });
+            return next(new Error('Something went wrong while creating your member'));
         } else {
             res.json({
                 member: member,
