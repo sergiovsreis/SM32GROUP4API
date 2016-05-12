@@ -7,7 +7,11 @@ router.get('/', function(req, res, next) {
 });
 
 var memberApi = require('./member/index');
+var locationApi = require('./location/index');
+
 
 router.post('/member', memberApi.create);
+router.post('/location', locationApi.create);
+
 
 module.exports = router;
