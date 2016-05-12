@@ -3,6 +3,9 @@
  */
 var Member = require('../../models/Member');
 var sha1 = require('sha1');
+var fs = require('fs');
+var path = require('path');
+
 
 module.exports.create = function(req, res, next) {
     var username = req.body.username;
@@ -20,7 +23,8 @@ module.exports.create = function(req, res, next) {
     var member = new Member({
         username: username,
         password: password,
-        role: {
+        pic: fs.readFileSync(path.join(__dirname, '/default_profile.jpg')),
+       role: {
             level: 0,
             description: 'Member'
         }
@@ -29,10 +33,13 @@ module.exports.create = function(req, res, next) {
 
     member.save(function (err) {
         if (err) {
-            return next(new Error('Something went wrong while creating your member'));
+            return next(err);
         } else {
             res.json({
-                member: member,
+                member: {
+                    id: member.id,
+                    username: member.username
+                },
                 success: true
             });
         }
