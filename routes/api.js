@@ -8,10 +8,12 @@ router.get('/', function(req, res, next) {
 
 var memberApi = require('./member/index');
 var locationApi = require('./location/index');
+var attendanceApi = require('./attendance/index');
+
 
 
 router.post('/member', memberApi.create);
 router.post('/location', locationApi.create);
-
+router.post('/attendance', attendanceApi.create);
 
 module.exports = router;
