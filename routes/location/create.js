@@ -21,7 +21,8 @@ module.exports.create = function(req, res, next) {
     var location = new Location({
         lng: req.body.lng,
         lat: req.body.lat,
-        member: req.body.member_id
+        member: req.body.member_id,
+        group: req.body.group_id
     });
 
     location.save(function (err, loc) {
