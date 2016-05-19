@@ -7,7 +7,8 @@ var Schema = mongoose.Schema;
 var LocationSchema = new Schema({
     lng: Number,
     lat: Number,
-    member: { type: Schema.Types.ObjectId, ref: 'Member' }
+    member: { type: Schema.Types.ObjectId, ref: 'Member' },
+    member: { type: Schema.Types.ObjectId, ref: 'Group' }
 });
 
 module.exports = mongoose.model('Location', LocationSchema);
