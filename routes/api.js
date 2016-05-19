@@ -10,6 +10,7 @@ var memberApi = require('./member/index');
 var locationApi = require('./location/index');
 
 
+router.post('/group', memberApi.create);
 router.post('/member', memberApi.create);
 router.post('/location', locationApi.create);
 
