@@ -13,7 +13,7 @@ var GroupModel = mongoose.model('Group', GroupSchema);
 
 GroupSchema.pre('save', function (next) {
     var self = this;
-    GroupSchema.find({group : self.name}, function (err, docs) {
+    GroupModel.find({group : self.name}, function (err, docs) {
         if (!docs.length){
             next();
         } else {
@@ -22,5 +22,11 @@ GroupSchema.pre('save', function (next) {
         }
     });
 });
+
+
+
+
+
+
 
 module.exports = GroupModel;
