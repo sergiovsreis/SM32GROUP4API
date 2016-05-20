@@ -13,7 +13,6 @@ var attendanceApi = require('./attendance/index');
 
 //Group API
 router.post('/addMember', groupApi.update);
-router.post('/getGroupMember', groupApi.get);
 router.post('/group', groupApi.create);
 
 //Member API
@@ -25,6 +24,8 @@ router.post('/location', locationApi.create);
 
 //Attendance API
 router.post('/attendance', attendanceApi.create);
+router.put('/attendance', attendanceApi.update);
+
 
 router.post('/member/login', memberApi.login);
 router.get('/member', memberApi.requireUser, function(req,res, next) {

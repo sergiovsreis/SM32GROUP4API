@@ -26,8 +26,16 @@ AttendanceSchema.pre('save', function (next) {
         //return next(new Error('Er na '));
     }
     next();
-
-
 });
+
+
+AttendanceSchema.pre('update', function (next) {
+    next();
+});
+
+
+
+
+
 
 module.exports = AttendanceModel;
