@@ -37,6 +37,8 @@ router.get('/location/:group_id/:member_id', locationApi.getLocation, function(r
 
 //Attendance API
 router.post('/attendance', attendanceApi.create);
+router.put('/attendance', attendanceApi.update);
+
 
 router.post('/member/login', memberApi.login);
 router.get('/member', memberApi.requireUser, function(req,res, next) {
