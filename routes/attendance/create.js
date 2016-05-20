@@ -16,9 +16,11 @@ module.exports.create = function(req, res, next) {
         return next(new Error('checkIn is empty'));
     }
 
+
     var attendance = new Attendance({
         checkIn: checkIn,
-        statusIn: status
+        statusIn: status,
+        member: req.body.member
     });
 
     attendance.save(function (err) {
@@ -39,3 +41,5 @@ module.exports.create = function(req, res, next) {
 
 
 };
+
+
