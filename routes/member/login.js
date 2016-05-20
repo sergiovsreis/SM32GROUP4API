@@ -50,7 +50,7 @@ module.exports.login = function(req, res, next) {
                    mid: member.id,
                    expires: Math.floor(doc._id.getTimestamp() / 1000) + 60,
                    token: doc.token,
-                   succes: true
+                   success: true
                });
            }
         });
