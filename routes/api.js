@@ -12,17 +12,21 @@ var groupApi = require('./group/index');
 var attendanceApi = require('./attendance/index');
 var pictureAPI = require('./picture/index');
 var moodAPI = require('./mood/index');
+var memberMoodApi = require('./MemberMood/index');
 
 //Group API
 router.put('/group', groupApi.update);
 router.post('/group', groupApi.create);
 router.get('/group/:id', groupApi.getMembers, function(req,res, next) {
     res.json({
-        works: true,
+        success: true,
         group: req.group,
         members: req.members
     });
 });
+
+//MemberMood API
+router.post('/MemberMood', memberMoodApi.create);
 
 //Member API
 router.post('/group', memberApi.create);
@@ -32,7 +36,7 @@ router.post('/member', memberApi.create);
 router.post('/location', locationApi.create);
 router.get('/location/:group_id/:member_id', locationApi.getLocation, function(req,res, next) {
     res.json({
-        works: true,
+        success: true,
         pos: req.pos
     });
 });
@@ -51,7 +55,7 @@ router.post('/mood', moodAPI.create);
 router.post('/member/login', memberApi.login);
 router.get('/member', memberApi.requireUser, function(req,res, next) {
     res.json({
-        works: true,
+        success: true,
         loggedInAs: req.user.username
     });
 });
