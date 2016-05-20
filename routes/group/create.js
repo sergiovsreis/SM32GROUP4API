@@ -1,4 +1,4 @@
-var Group = require('../../models/Group');
+var GroupModel = require('../../models/Group');
 
 module.exports.create = function(req, res, next) {
     var name = req.body.name;
@@ -7,7 +7,7 @@ module.exports.create = function(req, res, next) {
         name: name
     });
 
-    group.save(function (err, gro) {
+    GroupModel.save(function (err, gro) {
         if (err) {
             return next(new Error('Something went wrong while creating a location'));
         } else {

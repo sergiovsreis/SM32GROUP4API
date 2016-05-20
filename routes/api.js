@@ -12,9 +12,15 @@ var groupApi = require('./group/index');
 var attendanceApi = require('./attendance/index');
 
 //Group API
-router.post('/addMember', groupApi.update);
-router.post('/getGroupMember', groupApi.get);
+router.put('/group', groupApi.update);
 router.post('/group', groupApi.create);
+router.get('/group/:id', groupApi.getMembers, function(req,res, next) {
+    res.json({
+        works: true,
+        group: req.group,
+        members: req.members
+    });
+});
 
 //Member API
 router.post('/group', memberApi.create);
@@ -22,6 +28,12 @@ router.post('/member', memberApi.create);
 
 //Location API
 router.post('/location', locationApi.create);
+router.get('/location/:group_id/:member_id', locationApi.getLocation, function(req,res, next) {
+    res.json({
+        works: true,
+        pos: req.pos
+    });
+});
 
 //Attendance API
 router.post('/attendance', attendanceApi.create);
