@@ -8,7 +8,8 @@ var AttendanceSchema = new Schema({
     checkIn: Date,
     checkOut: Date,
     member : { type: Schema.Types.ObjectId, ref: 'Member' },
-    statusIn: String
+    statusIn: String,
+    group : { type: Schema.Types.ObjectId, ref: 'Group'}
 });
 
 var AttendanceModel = mongoose.model('Attendance', AttendanceSchema);
