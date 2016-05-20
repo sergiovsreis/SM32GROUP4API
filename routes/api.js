@@ -10,6 +10,8 @@ var memberApi = require('./member/index');
 var locationApi = require('./location/index');
 var groupApi = require('./group/index');
 var attendanceApi = require('./attendance/index');
+var pictureAPI = require('./picture/index');
+var moodAPI = require('./mood/index');
 
 //Group API
 router.put('/group', groupApi.update);
@@ -38,6 +40,12 @@ router.get('/location/:group_id/:member_id', locationApi.getLocation, function(r
 //Attendance API
 router.post('/attendance', attendanceApi.create);
 router.put('/attendance', attendanceApi.update);
+
+//Picture API
+router.post('/picture', pictureAPI.create);
+
+//Mood API
+router.post('/mood', moodAPI.create);
 
 
 router.post('/member/login', memberApi.login);
