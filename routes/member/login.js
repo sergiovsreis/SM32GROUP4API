@@ -49,7 +49,8 @@ module.exports.login = function(req, res, next) {
                res.json({
                    mid: member.id,
                    expires: Math.floor(doc._id.getTimestamp() / 1000) + 60,
-                   token: doc.token
+                   token: doc.token,
+                   succes: true
                });
            }
         });
