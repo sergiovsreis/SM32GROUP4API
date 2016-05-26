@@ -1,10 +1,10 @@
 var GroupModel = require('../../models/Group');
 
 module.exports.update = function(req, res, next) {
-    var id= req.body.id;
-    var member_id = req.body.member_id;
+    var group= req.body.group;
+    var member = req.body.member;
 
-    GroupModel.find({_id :  id}, function (err, docs) {
+    GroupModel.find({_id :  group}, function (err, docs) {
         if (err) {
             return next(err);
         }
@@ -12,7 +12,7 @@ module.exports.update = function(req, res, next) {
 
     GroupModel.update(
         {_id: id},
-        {$push : {"members": member_id} }, function(err,doc) {
+        {$push : {"members": member} }, function(err,doc) {
             if(err){
                 return next(err);
             }
