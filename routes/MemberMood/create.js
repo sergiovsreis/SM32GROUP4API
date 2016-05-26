@@ -3,27 +3,36 @@ var Member = require('../../models/Member');
 var Group = require('../../models/Group');
 
 module.exports.create = function(req, res, next) {
-    var member_id = req.body.member_id;
-    var group_id = req.body.group_id;
-    var mood_id = req.body.mood_id;
+    console.log(req.body);
+    var member = req.body.member;
+    var group = req.body.group;
+    var mood = req.body.mood;
     var description = req.body.description;
 
-    if (typeof(member_id) === 'undefined' || member_id === '') {
+    if (typeof(member) === 'undefined' || member === '') {
         return next(new Error('Member ID is empty'));
     }
 
-    if(Member.count({_id: member_id}) == 0 ){
+    if (typeof(mood) === 'undefined' || mood === '') {
+        return next(new Error('Mood ID is empty'));
+    }
+
+    if (typeof(group) === 'undefined' || group === '') {
+        return next(new Error('Group ID is empty'));
+    }
+
+    if(Member.count({_id: member}) == 0 ){
         return next(new Error('Member not found'));
     }
 
-    if(Group.count({_id: group_id}) == 0 ){
+    if(Group.count({_id: group}) == 0 ){
         return next(new Error('Group not found'));
     }
 
     var memberMood = new MemberMood({
-        mood: mood_id,
-        member: member_id,
-        group: group_id,
+        mood: mood,
+        member: member,
+        group: group,
         description: description
     });
 

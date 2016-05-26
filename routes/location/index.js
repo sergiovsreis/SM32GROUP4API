@@ -7,11 +7,10 @@ var locationCreate = require('./create');
 module.exports.create = locationCreate.create;
 
 module.exports.getLocation = function (req, res, next) {
-    console.log("test");
-    var group_id = req.params.group_id;
-    var member_id = req.params.member_id;
+    var group = req.params.group;
+    var member = req.params.member;
 
-    LocationModel.find({group :  group_id, member: member_id }, function (err, docs) {
+    LocationModel.find({group :  group, member: member }, function (err, docs) {
         if(err) {
             return next(err);
         }

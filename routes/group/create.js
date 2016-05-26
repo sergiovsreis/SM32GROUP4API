@@ -1,6 +1,7 @@
 var GroupModel = require('../../models/Group');
 
 module.exports.create = function(req, res, next) {
+    console.log(req.body);
     var name = req.body.name;
 
     var group = new Group({

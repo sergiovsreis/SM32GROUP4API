@@ -7,6 +7,7 @@ var Group = require('../../models/Group');
 
 
 module.exports.create = function(req, res, next) {
+    console.log(req.body);
     var checkIn = req.body.checkIn;
     //var checkOut = req.body.checkOut;
     var status = "checkIn";
