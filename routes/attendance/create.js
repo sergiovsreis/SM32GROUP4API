@@ -7,47 +7,53 @@ var Group = require('../../models/Group');
 
 
 module.exports.create = function(req, res, next) {
-    var checkIn = req.body.checkIn;
+   // var checkIn = req.body.checkIn;
     //var checkOut = req.body.checkOut;
     var status = "checkIn";
-    var member = req.body.member;
     var group = req.body.group;
 
-    if (typeof(checkIn) === 'undefined' || checkIn === '') {
+
+
+  /*  if (typeof(checkIn) === 'undefined' || checkIn === '') {
         return next(new Error('checkIn is empty'));
     }
-
-    if(Group.count({_id :  group, member : {$in : member}}) === 0)
+*/
+/*    if(Group.count({_id : group, member : {$in : member}}) === 0)
     {
-        return next('No groups found with member: ' + member);
-    }
 
+    }*/
 
-    var attendance = new Attendance({
-        checkIn: checkIn,
-        statusIn: status,
-        member: req.body.member,
-        group: group
-    });
-
-    attendance.save(function (err) {
-        if (err) {
-            return next(err);
-        } else {
-            res.json({
-                attendance: {
-                    id: attendance.id,
-                    checkIn: attendance.checkIn,
-                    statusIn: attendance.statusIn,
-                    member: attendance.member,
-                    group: attendance.group
-                },
-                success: true
-            });
+    Group.findOne({_id: group, members: req.user.id}, function(err, doc) {
+        if(err != null || doc == null || doc.length == 0)
+        {
+            return next('No groups found with member: ' + req.user.id);
         }
+        var attendance = new Attendance({
+            checkIn: Date.now(),
+            statusIn: status,
+            member: req.user._id,
+            group: group
+        });
+        doc.checkIns += 1;
+        doc.save();
+
+        attendance.save(function (err) {
+            if (err) {
+                return next(err);
+            } else {
+                res.json({
+                    attendance: {
+                        id: attendance.id,
+                        checkIn: attendance.checkIn,
+                        statusIn: attendance.statusIn,
+                        member: attendance.member,
+                        group: attendance.group
+                    },
+                    success: true
+                });
+            }
+        });
     });
-
-
 };
 
 

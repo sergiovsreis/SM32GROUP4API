@@ -15,9 +15,29 @@ module.exports.update = function(req, res, next) {
         return next(new Error('checkIn is empty'));
     }
 
-    var query = {member: member, statusIn: 'checkIn'};
-    Attendance.update(query, {$set: { statusIn: 'checkOut', checkOut: checkOut }}, callback)
+    Attendance.find({member: member, statusIn: 'checkIn'}).populate('group').exec(function(err, doc) {
+       if(err)
+       {
+           return next(err);
+       }
+        doc.group.checkIns -= 1;
+        doc.group.save();
+        doc.statusIn = 'checkOut';
+        doc.checkOut = checkOut;
+        doc.save(function(err, nums) {
+            if(err)
+            {
+                return next(err);
+            }
+            res.json({
+                updated: nums + " rij" + nums == 1 ? '' : 'en',
+                success: true
+            })
+        });
+    });
 
+    /*
+    Attendance.update(query, {$set: { statusIn: 'checkOut', checkOut: checkOut }}, callback);
 
     function callback (err, numAffected) {
         if(err)
@@ -31,7 +51,7 @@ module.exports.update = function(req, res, next) {
                 success: true
             });
         }
-    };
+    };*/
 
 
 
