@@ -8,21 +8,21 @@ var Location = require('../../models/Location');
 var Member = require('../../models/Member');
 
 module.exports.create = function(req, res, next) {
-    var member_id = req.body.member_id;
+    var member = req.body.member;
 
-    if (typeof(member_id) === 'undefined' || member_id === '') {
+    if (typeof(member) === 'undefined' || member === '') {
         return next(new Error('Member ID is empty'));
     }
 
-    if(Member.count({_id: member_id}) == 0 ){
+    if(Member.count({_id: member}) == 0 ){
         return next(new Error('Member not found'));
     }
 
     var location = new Location({
         lng: req.body.lng,
         lat: req.body.lat,
-        member: req.body.member_id,
-        group: req.body.group_id
+        member: req.body.member,
+        group: req.body.group
     });
 
     location.save(function (err, loc) {
