@@ -15,8 +15,9 @@ var moodAPI = require('./mood/index');
 var memberMoodApi = require('./MemberMood/index');
 
 //Group API
-router.put('/group', groupApi.update);
-router.post('/group', groupApi.create);
+router.put('/group',  groupApi.update);
+router.post('/group', memberApi.requireUser, groupApi.create);
+
 router.get('/group/:id', groupApi.getMembers, function(req,res, next) {
     res.json({
         success: true,
@@ -29,21 +30,15 @@ router.get('/group/:id', groupApi.getMembers, function(req,res, next) {
 router.post('/MemberMood', memberMoodApi.create);
 
 //Member API
-router.post('/group', memberApi.create);
 router.post('/member', memberApi.create);
 
 //Location API
 router.post('/location', locationApi.create);
-router.get('/location/:group_id/:member_id', locationApi.getLocation, function(req,res, next) {
-    res.json({
-        success: true,
-        pos: req.pos
-    });
-});
+router.get('/location/:group_id/:member_id', locationApi.getLocation);
 
 //Attendance API
-router.post('/attendance', attendanceApi.create);
-router.put('/attendance', attendanceApi.update);
+router.post('/attendance', memberApi.requireUser, attendanceApi.create);
+router.put('/attendance', memberApi.requireUser, attendanceApi.update);
 
 //Picture API
 router.post('/picture', pictureAPI.create);
@@ -53,10 +48,6 @@ router.post('/mood', moodAPI.create);
 
 
 router.post('/member/login', memberApi.login);
-router.get('/member', memberApi.requireUser, function(req,res, next) {
-    res.json({
-        success: true,
-        loggedInAs: req.user.username
-    });
-});
+router.get('/member', memberApi.requireUser, groupApi.findGroup);
+
 module.exports = router;
