@@ -11,7 +11,7 @@ module.exports.update = function(req, res, next) {
     });
 
     GroupModel.update(
-        {_id: id},
+        {_id: group},
         {$push : {"members": member} }, function(err,doc) {
             if(err){
                 return next(err);
