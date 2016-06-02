@@ -7,6 +7,8 @@ var Schema = mongoose.Schema;
 var AttendanceSchema = new Schema({
     checkIn: Date,
     checkOut: Date,
+    week: Number,
+    weekDay: Number,
     member : { type: Schema.Types.ObjectId, ref: 'Member' },
     statusIn: String,
     group : { type: Schema.Types.ObjectId, ref: 'Group'}

@@ -28,8 +28,15 @@ module.exports.create = function(req, res, next) {
         {
             return next('No groups found with member: ' + req.user.id);
         }
+
+        var today = new Date();
+        var weeknumber = today.getWeek();
+
+
         var attendance = new Attendance({
             checkIn: Date.now(),
+            week: new Date().getWeek().toString(),
+            weekDay: new Date().getDay(),
             statusIn: status,
             member: req.user._id,
             group: group
