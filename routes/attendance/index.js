@@ -21,41 +21,51 @@ module.exports.getAttendace = function (req, res, next) {
     var group = req.params.group;
     var week = req.params.week;
 
-    var mo;
-    var tu;
-    var we;
-    var th;
-    var fr;
-    var sa;
-    var su;
+    var week = {};
+
+
+    var ntasks_left_to_go = 7;
 
     Attendance.count({group : group, week: week, weekDay: 1 }, function(err, count){
-        mo = count;
+        week.mo = 1;
+        callback();
     });
     Attendance.count({group : group, week: week, weekDay: 2 }, function(err, count){
-        tu = count;
+        week.tu = 4;
+        callback();
     });
     Attendance.count({group : group, week: week, weekDay: 3 }, function(err, count){
-        we = count;
+        week.we = 3;
+        callback();
     });
     Attendance.count({group : group, week: week, weekDay: 4 }, function(err, count){
-        th = count;
+        week.th = 2;
+        callback();
     });
     Attendance.count({group : group, week: week, weekDay: 5 }, function(err, count){
-        fr = count;
+        week.fr = 1;
+        callback();
     });
     Attendance.count({group : group, week: week, weekDay: 6 }, function(err, count){
-        sa = count;
-    });    Attendance.count({group : group, week: week, weekDay: 7 }, function(err, count){
-        res.json({
-            mo: mo,
-            tu: tu,
-            we: we,
-            th: th,
-            fr: fr,
-            sa: sa,
-            su: count,
-            success: true
-        });
+        week.sa = 2;
+        callback();
     });
+    Attendance.count({group : group, week: week, weekDay: 7 }, function(err, count){
+        week.su = 4;
+        callback();
+    });
+
+
+    var callback = function(){
+        ntasks_left_to_go -= 1;
+        if(ntasks_left_to_go <= 0){
+            console.log(week);
+            res.json({
+                week: week,
+                success: true
+            });
+        }
+    }
+
+
 }
