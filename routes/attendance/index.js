@@ -47,7 +47,6 @@ module.exports.getAttendace = function (req, res, next) {
     Attendance.count({group : group, week: week, weekDay: 6 }, function(err, count){
         sa = count;
     });    Attendance.count({group : group, week: week, weekDay: 7 }, function(err, count){
-        su = count;
         res.json({
             mo: mo,
             tu: tu,
@@ -55,7 +54,7 @@ module.exports.getAttendace = function (req, res, next) {
             th: th,
             fr: fr,
             sa: sa,
-            su: su,
+            su: count,
             success: true
         });
     });

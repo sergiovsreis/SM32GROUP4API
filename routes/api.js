@@ -18,7 +18,7 @@ var memberMoodApi = require('./MemberMood/index');
 router.put('/group',  groupApi.update);
 router.post('/group', memberApi.requireUser, groupApi.create);
 
-router.get('/group/:id', groupApi.getMembers, function(req,res, next) {
+router.get('/group/:group', groupApi.getMembers, function(req,res, next) {
     res.json({
         success: true,
         group: req.group,
