@@ -31,6 +31,7 @@ router.post('/MemberMood', memberMoodApi.create);
 
 //Member API
 router.post('/member', memberApi.create);
+router.get('/member/find', memberApi.find);
 
 //Location API
 router.post('/location', locationApi.create);
@@ -39,7 +40,7 @@ router.get('/location/:group_id/:member_id', locationApi.getLocation);
 //Attendance API
 router.post('/attendance', memberApi.requireUser, attendanceApi.create);
 router.put('/attendance', memberApi.requireUser, attendanceApi.update);
-router.get('/attendance/:group/:week', attendanceApi.getAttendace)
+router.get('/attendance/:group/:member/:week', attendanceApi.getAttendace)
 
 //Picture API
 router.post('/picture', pictureAPI.create);

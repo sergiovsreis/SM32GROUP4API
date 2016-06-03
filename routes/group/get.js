@@ -1,5 +1,4 @@
 var GroupModel = require('../../models/Group');
-var AttendanceModel = require('../../models/Attendance');
 
 module.exports.get = function(req, res, next) {
     var userId = req.user.id;
@@ -18,7 +17,10 @@ module.exports.get = function(req, res, next) {
                 name: doc.name
             };
             doc.members.forEach(function(member) {
-                group.members.push(member.username)
+                group.members.push({
+                    name : member.username,
+                    pic: member.pic.toString('base64')
+                });
             });
             groups.push(group);
         });

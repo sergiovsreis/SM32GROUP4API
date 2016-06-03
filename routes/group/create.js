@@ -2,11 +2,14 @@ var Group = require('../../models/Group');
 
 module.exports.create = function(req, res, next) {
     var name = req.body.name;
+    var members = req.body.members || [];
 
+    members.unshift(req.user.id);
+    console.log(members);
     var group = new Group({
         name: name,
         checkIns: 0,
-        members: [req.user._id]
+        members: members
     });
 
     group.save(function (err, gro) {

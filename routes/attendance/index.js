@@ -20,83 +20,196 @@ module.exports.getAttendace = function (req, res, next) {
 
     var group = req.params.group;
     var weeknr = req.params.week;
+    var member = req.params.member;
 
-    var week = {};
-    var average = {};
-    var ntasks_left_to_go = 14;
+    var groupAverage = {};
+    var classAverage = {};
+    var memberAverage = {};
+    var ntasks_left_to_go = 21;
 
+    //Member attendance
+    Attendance.count({group : group, member : member, week: weeknr, weekDay: 1 }, function(err, count){
+        memberAverage.mo = count;
+        callback();
+    });
+    Attendance.count({group : group, member : member, week: weeknr, weekDay: 2 }, function(err, count){
+        memberAverage.tu = count;
+        callback();
+    });
+    Attendance.count({group : group, member : member, week: weeknr, weekDay: 3 }, function(err, count){
+        memberAverage.we = count;
+        callback();
+    });
+    Attendance.count({group : group, member : member, week: weeknr, weekDay: 4 }, function(err, count){
+        memberAverage.th = count;
+        callback();
+    });
+    Attendance.count({group : group, member : member, week: weeknr, weekDay: 5 }, function(err, count){
+        memberAverage.fr = count;
+        callback();
+    });
+    Attendance.count({group : group, member : member, week: weeknr, weekDay: 6 }, function(err, count){
+        memberAverage.sa = count;
+        callback();
+    });
+    Attendance.count({group : group, member : member, week: weeknr, weekDay: 7 }, function(err, count){
+        memberAverage.su = count;
+        callback();
+    });
+
+
+    //Group attendance
     Attendance.count({group : group, week: weeknr, weekDay: 1 }, function(err, count){
-        week.mo = count;
+        groupAverage.mo = count;
         callback();
     });
     Attendance.count({group : group, week: weeknr, weekDay: 2 }, function(err, count){
-        week.tu = count;
+        groupAverage.tu = count;
         callback();
     });
     Attendance.count({group : group, week: weeknr, weekDay: 3 }, function(err, count){
-        week.we = count;
+        groupAverage.we = count;
         callback();
     });
     Attendance.count({group : group, week: weeknr, weekDay: 4 }, function(err, count){
-        week.th = count;
+        groupAverage.th = count;
         callback();
     });
     Attendance.count({group : group, week: weeknr, weekDay: 5 }, function(err, count){
-        week.fr = count;
+        groupAverage.fr = count;
         callback();
     });
     Attendance.count({group : group, week: weeknr, weekDay: 6 }, function(err, count){
-        week.sa = count;
+        groupAverage.sa = count;
         callback();
     });
     Attendance.count({group : group, week: weeknr, weekDay: 7 }, function(err, count){
-        week.su = count;
+        groupAverage.su = count;
         callback();
     });
 
-    Attendance.count({group : {$ne: group}, week: weeknr, weekDay: 1 }, function(err, count){
-        average.mo = count;
+    //Average Group attendance
+    var count = 0;
+    var devision = 0;
+    var id_previous = "";
+
+    Attendance.find({group : {$ne: group}, week: weeknr, weekDay: 1 }, function(err, data){
+        count = data.length;
+        if(count >= 1) {
+            devision = 0;
+            for (var i = 0; i < data.length; i++) {
+                if (!data[i]["group"].equals(id_previous)) {
+                    devision++;
+                }
+                id_previous = data[i]["group"];
+            }
+            count = count / devision;
+        }
+        classAverage.mo = count;
         callback();
     });
-    Attendance.count({group : {$ne: group}, week: weeknr, weekDay: 2 }, function(err, count){
-        average.tu = count;
+    Attendance.find({group : {$ne: group}, week: weeknr, weekDay: 2 }, function(err, data){
+        count = data.length;
+        if(count >= 1) {
+            devision = 0;
+            for (var i = 0; i < data.length; i++) {
+                if (!data[i]["group"].equals(id_previous)) {
+                    devision++;
+                }
+                id_previous = data[i]["group"];
+            }
+            count = count / devision;
+        }
+        classAverage.tu = count;
         callback();
     });
-    Attendance.count({group : {$ne: group}, week: weeknr, weekDay: 3 }, function(err, count){
-        average.we = count;
+    Attendance.find({group : {$ne: group}, week: weeknr, weekDay: 3 }, function(err, data){
+        count = data.length;
+        if(count >= 1) {
+            devision = 0;
+            for (var i = 0; i < data.length; i++) {
+                if (!data[i]["group"].equals(id_previous)) {
+                    devision++;
+                }
+                id_previous = data[i]["group"];
+            }
+            count = count / devision;
+        }
+        classAverage.we = count;
         callback();
     });
-    Attendance.count({group : {$ne: group}, week: weeknr, weekDay: 4 }, function(err, count){
-        average.th = count;
+    Attendance.find({group : {$ne: group}, week: weeknr, weekDay: 4 }, function(err, data){
+        count = data.length;
+        if(count >= 1) {
+            devision = 0;
+            for (var i = 0; i < data.length; i++) {
+                if (!data[i]["group"].equals(id_previous)) {
+                    devision++;
+                }
+                id_previous = data[i]["group"];
+            }
+            count = count / devision;
+        }
+        classAverage.th = count;
         callback();
     });
-    Attendance.count({group : {$ne: group}, week: weeknr, weekDay: 5 }, function(err, count){
-        average.fr = count;
+    Attendance.find({group : {$ne: group}, week: weeknr, weekDay: 5 }, function(err, data){
+        count = data.length;
+        if(count >= 1) {
+            devision = 0;
+            for (var i = 0; i < data.length; i++) {
+                if (!data[i]["group"].equals(id_previous)) {
+                    devision++;
+                }
+                id_previous = data[i]["group"];
+            }
+            count = count / devision;
+        }
+        classAverage.fr = count;
         callback();
     });
-    Attendance.count({group : {$ne: group}, week: weeknr, weekDay: 6 }, function(err, count){
-        average.sa = count;
+    Attendance.find({group : {$ne: group}, week: weeknr, weekDay: 6 }, function(err, data){
+        count = data.length;
+        if(count >= 1) {
+            devision = 0;
+            for (var i = 0; i < data.length; i++) {
+                if (!data[i]["group"].equals(id_previous)) {
+                    devision++;
+                }
+                id_previous = data[i]["group"];
+            }
+            count = count / devision;
+        }
+        classAverage.sa = count;
         callback();
     });
-    Attendance.count({group : {$ne: group}, week: weeknr, weekDay: 7 }, function(err, count){
-        average.su = count;
+    Attendance.find({group : {$ne: group}, week: weeknr, weekDay: 7 }, function(err, data){
+        count = data.length;
+        if(count >= 1) {
+            devision = 0;
+            for (var i = 0; i < data.length; i++) {
+                if (!data[i]["group"].equals(id_previous)) {
+                    devision++;
+                }
+                id_previous = data[i]["group"];
+            }
+            count = count / devision;
+        }
+        classAverage.su = count;
         callback();
     });
 
-    Attendance.find({}).distinct(group, function(error, ids) {
-        console.log(error, ids);
-    });
-
-    var data = {};
-    data.week = week;
-    data.average = average;
+    var attendance = {};
+    attendance.memberAverage = memberAverage;
+    attendance.groupAverage = groupAverage;
+    attendance.classAverage = classAverage;
 
     var callback = function(){
         ntasks_left_to_go -= 1;
         if(ntasks_left_to_go <= 0){
             //console.log(week);
             res.json({
-                data: data,
+                attendance: attendance,
                 success: true
             });
         }
