@@ -22,8 +22,8 @@ module.exports.getAttendace = function (req, res, next) {
     var weeknr = req.params.week;
 
     var week = {};
-
-    var ntasks_left_to_go = 7;
+    var average = {};
+    var ntasks_left_to_go = 14;
 
     Attendance.count({group : group, week: weeknr, weekDay: 1 }, function(err, count){
         week.mo = count;
@@ -54,12 +54,46 @@ module.exports.getAttendace = function (req, res, next) {
         callback();
     });
 
+    Attendance.count({group : {$ne: group}, week: weeknr, weekDay: 1 }, function(err, count){
+        average.mo = count;
+        callback();
+    });
+    Attendance.count({group : {$ne: group}, week: weeknr, weekDay: 2 }, function(err, count){
+        average.tu = count;
+        callback();
+    });
+    Attendance.count({group : {$ne: group}, week: weeknr, weekDay: 3 }, function(err, count){
+        average.we = count;
+        callback();
+    });
+    Attendance.count({group : {$ne: group}, week: weeknr, weekDay: 4 }, function(err, count){
+        average.th = count;
+        callback();
+    });
+    Attendance.count({group : {$ne: group}, week: weeknr, weekDay: 5 }, function(err, count){
+        average.fr = count;
+        callback();
+    });
+    Attendance.count({group : {$ne: group}, week: weeknr, weekDay: 6 }, function(err, count){
+        average.sa = count;
+        callback();
+    });
+    Attendance.count({group : {$ne: group}, week: weeknr, weekDay: 7 }, function(err, count){
+        average.su = count;
+        callback();
+    });
+
+    Attendance.find().distinct(group, function(error, ids) {
+        console.log(error, ids);
+    });
+
     var callback = function(){
         ntasks_left_to_go -= 1;
         if(ntasks_left_to_go <= 0){
             //console.log(week);
             res.json({
                 week: week,
+                average: average,
                 success: true
             });
         }
