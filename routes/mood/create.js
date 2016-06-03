@@ -4,9 +4,13 @@
 var Mood = require('../../models/Mood');
 
 
+
+
+
 module.exports.create = function(req, res, next) {
     var description = req.body.description;
-    var picture = req.body.picture;
+    var picture = req.file.buffer;
+
 
     var mood = new Mood({
         description :  description,
@@ -20,8 +24,7 @@ module.exports.create = function(req, res, next) {
             res.json({
                 mood: {
                     id : mood.id,
-                    description: mood.description,
-                    picture: mood.picture
+                    description: mood.description
                 },
                 success: true
             });

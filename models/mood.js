@@ -6,7 +6,7 @@ var Schema = mongoose.Schema;
 
 var MoodSchema = new Schema({
     description : String,
-    picture : { type: Schema.Types.ObjectId, ref: 'Picture' }
+    picture :   Buffer
 });
 
 var MoodModel = mongoose.model('Mood', MoodSchema);
