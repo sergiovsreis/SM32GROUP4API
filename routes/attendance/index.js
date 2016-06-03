@@ -87,13 +87,16 @@ module.exports.getAttendace = function (req, res, next) {
         console.log(error, ids);
     });
 
+    var data = {};
+    data.week = week;
+    data.average = average;
+
     var callback = function(){
         ntasks_left_to_go -= 1;
         if(ntasks_left_to_go <= 0){
             //console.log(week);
             res.json({
-                week: week,
-                average: average,
+                data: data,
                 success: true
             });
         }
