@@ -83,7 +83,7 @@ module.exports.getAttendace = function (req, res, next) {
         callback();
     });
 
-    Attendance.find().distinct(group, function(error, ids) {
+    Attendance.find({}).distinct(group, function(error, ids) {
         console.log(error, ids);
     });
 
