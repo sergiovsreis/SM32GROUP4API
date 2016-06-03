@@ -45,7 +45,9 @@ router.get('/attendance/:group/:member/:week', attendanceApi.getAttendace)
 router.post('/picture', pictureAPI.create);
 
 //Mood API
-router.post('/mood', moodAPI.create);
+router.post('/mood',moodAPI.upload.single('moodPicture'), moodAPI.create);
+router.get('/mood', moodAPI.get);
+
 
 
 router.post('/member/login', memberApi.login);
