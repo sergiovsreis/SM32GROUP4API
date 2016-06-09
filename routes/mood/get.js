@@ -1,15 +1,12 @@
-var Attendance = require('../../models/Attendance');
+var Mood = require('../../models/Mood');
 
 module.exports.get = function (req, res, next) {
-    var id = req.params.group;
+    Mood.find({},function(error, docs) {
+        console.log(error, docs);
 
-    GroupModel.findOne({_id :  group}, function (err, docs) {
-        if (err) {
-            return next(err);
-        } else {
-            req.members = docs.members;
-            req.name = docs.name;
-            next();
-        }
+        res.json({
+            succes: true,
+           docs: docs
+        });
     });
-}
+};
