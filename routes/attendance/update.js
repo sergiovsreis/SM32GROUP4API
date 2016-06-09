@@ -8,7 +8,7 @@ module.exports.update = function(req, res, next) {
     var member = req.user._id;
     var group = req.body.group;
 
-    Attendance.find({member: member, statusIn: 'checkIn', group: group}).populate('group').exec(function(err, doc) {
+    Attendance.findOne({member: member, statusIn: 'checkIn', group: group}).populate('group').exec(function(err, doc) {
         if(err)
         {
             return next(err);
