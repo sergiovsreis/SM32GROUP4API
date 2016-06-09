@@ -40,7 +40,7 @@ router.get('/location/:group_id/:member_id', locationApi.getLocation);
 //Attendance API
 router.post('/attendance', memberApi.requireUser, attendanceApi.create);
 router.put('/attendance', memberApi.requireUser, attendanceApi.update);
-router.get('/attendance/:group/:member/:week', attendanceApi.getAttendace)
+router.get('/attendance/:group/:member/:week', attendanceApi.getAttendace);
 
 //Picture API
 router.post('/picture', pictureAPI.create);

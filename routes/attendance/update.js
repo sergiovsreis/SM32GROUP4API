@@ -5,25 +5,18 @@ var Attendance = require('../../models/Attendance');
 
 module.exports.update = function(req, res, next) {
 
-    var checkOut = req.body.checkOut;
-    var status = "checkOut";
-    var member = req.body.member;
-    var id = req.body.id;
+    var member = req.user._id;
+    var group = req.body.group;
 
-    if (typeof(checkOut) === 'undefined' || checkOut === '' || typeof(member) === 'undefined' || member === '')
-    {
-        return next(new Error('checkIn is empty'));
-    }
-
-    Attendance.find({member: member, statusIn: 'checkIn'}).populate('group').exec(function(err, doc) {
-       if(err)
-       {
-           return next(err);
-       }
+    Attendance.find({member: member, statusIn: 'checkIn', group: group}).populate('group').exec(function(err, doc) {
+        if(err)
+        {
+            return next(err);
+        }
         doc.group.checkIns -= 1;
         doc.group.save();
         doc.statusIn = 'checkOut';
-        doc.checkOut = checkOut;
+        doc.checkOut = Date.now();
         doc.save(function(err, nums) {
             if(err)
             {
@@ -35,25 +28,5 @@ module.exports.update = function(req, res, next) {
             })
         });
     });
-
-    /*
-    Attendance.update(query, {$set: { statusIn: 'checkOut', checkOut: checkOut }}, callback);
-
-    function callback (err, numAffected) {
-        if(err)
-        {
-            return next(err);
-        }
-        else
-        {
-            res.json({
-                updated: numAffected + " rij(en)",
-                success: true
-            });
-        }
-    };*/
-
-
-
 };
 
