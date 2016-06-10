@@ -3,24 +3,24 @@ var GroupModel = require('../../models/Group');
 module.exports.update = function(req, res, next) {
     var group= req.body.group;
     var member = req.body.member;
-
-    GroupModel.find({_id :  group}, function (err, docs) {
+    var type = req.body.type || "insert";
+    GroupModel.findOne({_id :  group}, function (err, group) {
         if (err) {
             return next(err);
         }
+        if(type === "insert") {
+            group.members.push(member);
+        }
+        if(type === "delete") {
+            group.members.remove(member);
+        }
+        group.save(function(err, doc) {
+            return res.json({
+                success: true,
+                members: doc.members
+            });
+        });
     });
 
-    GroupModel.update(
-        {_id: group},
-        {$push : {"members": member} }, function(err,doc) {
-            if(err){
-                return next(err);
-            }
-            else{
-                res.json({
-                    message: "Succesvol added member to group ",
-                    success: true
-                })
-            }
-    });
+
 }
