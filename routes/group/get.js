@@ -18,6 +18,7 @@ module.exports.get = function(req, res, next) {
             };
             doc.members.forEach(function(member) {
                 group.members.push({
+                    id: member.id,
                     name : member.username,
                     pic: member.pic.toString('base64')
                 });
