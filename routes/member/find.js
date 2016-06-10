@@ -1,4 +1,5 @@
 var Member = require('../../models/Member');
+var Attendence = require('../../models/Attendance');
 
 module.exports.find = function(req, res, next) {
     var name = req.query.username;
@@ -15,14 +16,16 @@ module.exports.find = function(req, res, next) {
                 message: 'Gebruiker niet gevonden'
             });
         }
-
-        return res.json({
-            success: true,
-            result: {
-                id: doc.id,
-                user: doc.username,
-                pic: doc.pic.toString('base64')
-            }
+        Attendence.findOne({member: doc.id}).sort('-id').exec(function(err, attendence) {
+            return res.json({
+                success: true,
+                result: {
+                    id: doc.id,
+                    user: doc.username,
+                    lastseen: attendence != null ? attendence._id.getTimestamp() : null,
+                    pic: doc.pic.toString('base64')
+                }
+            });
         });
     });
 };
