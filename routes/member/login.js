@@ -41,14 +41,13 @@ module.exports.login = function(req, res, next) {
                token.save(function(err, doc) {
                    res.json({
                        mid: member.id,
-                       //expires: Math.floor(doc._id.getTimestamp() / 1000) + 60,
-                       token: doc.token
+                       token: doc.token,
+                       success: true
                    });
                });
            }  else {
                res.json({
                    mid: member.id,
-                   //expires: Math.floor(doc._id.getTimestamp() / 1000) + 60,
                    token: doc.token,
                    success: true
                });
